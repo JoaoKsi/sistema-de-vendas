@@ -1,0 +1,214 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+
+int main() {
+    int opcao, opcao1, opcao2, edicao, assinantes, valor_assinatura = 50;
+
+
+    string usuarios[5] = {"Eduardo", "Gabriel", "Joao", "Caua", "Deivid"};
+    string senha[5] = {"senha1", "senha2", "senha3", "senha4", "senha5"};
+
+
+    string user_login, senha_login;
+    string nome_user;
+    bool login_valido = false;
+    char voltar;
+
+
+    double total_vendas ;
+    double taxa_vendas = 0.10;
+    double total_aluguel ;
+    double taxa_aluguel = 0.05;
+    double assinatura_total;
+
+
+    vector<string> nomes_metas;
+    vector<double> vendas_metas;
+    vector<double> valores_metas;
+
+
+    cout<<"---- Sistema de Login ----"<<endl;
+    cout<<"Digite seu login: ";
+    cin>>user_login;
+
+
+    cout<<"Digite sua senha: ";
+    cin>>senha_login;
+
+
+    for (int i = 0; i < 5; i++) {
+        if (user_login == usuarios[i] && senha_login == senha[i]) {
+            login_valido = true;
+            nome_user = usuarios[i];
+            break;
+        }
+    }
+
+
+    if (!login_valido) {
+        cout<<"Login ou senha incorretos!"<<endl;
+        return 0;
+    }
+
+
+    cout<<"Bem-vindo ao sistema financeiro do Galpao, "<< nome_user<<"!"<<endl;
+
+
+    do {
+        cout<<"O que deseja visualizar?"<<endl;
+        cout<<"1 - Relatorio de alugueis."<<endl;
+        cout<<"2 - Relatorio de vendas."<<endl;
+        cout<<"3 - Relatorio de assinaturas premium." << endl;
+        cout<<"4 - Metas." << endl;
+       
+
+
+        cin>>opcao;
+
+
+        switch (opcao) {
+            case 1: {
+                cout<<"Aqui esta seu relatorio de produtos alugados."<<endl;
+                cout<<"Digite o valor total de alugueis realizados"<<endl;
+                cin>>total_aluguel;
+                cout<<"Aqui esta seu relatorio de produtos alugados"<<endl;
+                cout<<"A quantia total obtida com aluguel eh de: R$"<<total_aluguel<<endl;
+                cout<<"O lucro dos alugueis da um total de: R$"<<total_aluguel * taxa_aluguel<<endl;
+                break;
+            }
+
+
+            case 2: {
+                cout<<"Segue abaixo o seu lucro obtido atraves das vendas."<<endl;
+                cout<<"Digite o valor total de vendas realizadas"<<endl;
+                cin>>total_vendas;
+                cout<<"Segue abaixo o seu lucro obtido atraves das vendas: "<<endl;
+                cout<<"A quantia total obtida com as vendas e de: R$"<<total_vendas<<endl;
+                cout<<"O lucro das vendas da um total de: R$"<<total_vendas * taxa_vendas<<endl;
+                break;
+            }
+
+
+            case 3: {
+                cout<<"Quantos assinantes obteve no ultimo mes? ";
+                cin>>assinantes;
+                assinatura_total = assinantes * valor_assinatura;
+                cout<<"O lucro total de assinantes premium no ultimo mes eh: "<< assinatura_total<<endl;
+                break;
+            }
+
+
+            case 4: {
+                if (nomes_metas.empty()) {
+                    cout<< "Nao ha metas cadastradas. Por favor, crie uma nova meta."<< endl;
+                    cout<< "1 - Criar nova meta"<<endl;
+                    cin >> opcao1;
+
+
+                    if (opcao1 == 1) {
+                        string nome_meta;
+                        double vendas_meta, valor_meta;
+
+
+                        cout<<"Digite o nome da sua nova meta: ";
+                        cin>>nome_meta;
+                        cout<<"Quantas vendas deseja realizar neste ano: ";
+                        cin>>vendas_meta;
+                        cout<<"Qual seria o faturamento desejado para esta meta: ";
+                        cin>>valor_meta;
+
+
+                        nomes_metas.push_back(nome_meta);
+                        vendas_metas.push_back(vendas_meta);
+                        valores_metas.push_back(valor_meta);
+
+
+                        cout<<"Meta '"<<nome_meta<<"' cadastrada com sucesso!"<<endl;
+                    }
+                } else {
+                    cout<<"1 - Visualizar a meta atual"<<endl;
+                    cout<<"2 - Editar meta atual"<<endl;
+                    cout<<"3 - Criar nova meta"<<endl;
+                    cin>>opcao2;
+
+
+                    switch (opcao2) {
+                        case 1:
+                            for (int i = 0; i < nomes_metas.size(); i++) {
+                                cout<<"Meta "<<i + 1 << ":"<<endl;
+                                cout<<"Nome: "<<nomes_metas[i]<<endl;
+                                cout<<"Total de vendas: "<<vendas_metas[i]<<endl;
+                                cout<<"Faturamento: "<<valores_metas[i]<<endl;
+                            }
+                            break;
+
+
+                        case 2:
+                            cout<<"Digite o numero da meta que deseja editar: ";
+                            cin>>edicao;
+                            edicao--;
+                            if (edicao >= 0 && edicao < nomes_metas.size()) {
+                                cout<<"Digite o novo nome da meta: ";
+                                cin>>nomes_metas[edicao];
+                                cout<<"Digite a nova quantidade de vendas: ";
+                                cin>>vendas_metas[edicao];
+                                cout<<"Digite o novo valor de faturamento: ";
+                                cin>>valores_metas[edicao];
+                                cout<<"Meta editada com sucesso!"<<endl;
+                            } else {
+                                cout<<"Numero de meta invalido."<<endl;
+                            }
+                            break;
+
+
+                        case 3: {
+                            string nome_meta;
+                            double vendas_meta, valor_meta;
+
+
+                            cout<<"Digite o nome da sua nova meta: ";
+                            cin>>nome_meta;
+                            cout<<"Quantas vendas deseja realizar neste ano: ";
+                            cin>>vendas_meta;
+                            cout<<"Qual seria o faturamento desejado para esta meta: ";
+                            cin>>valor_meta;
+
+
+                            nomes_metas.push_back(nome_meta);
+                            vendas_metas.push_back(vendas_meta);
+                            valores_metas.push_back(valor_meta);
+
+
+                            cout<<"Meta "<<nome_meta<<" foi cadastrada com sucesso!"<<endl;
+                            break;
+                        }
+
+
+                        default:
+                            cout<<"Opção invalida."<<endl;
+                            break;
+                    }
+                }
+                break;
+               
+            }
+
+
+            default:
+            cout<<"Opção invalida."<<endl;
+            break;
+}
+       
+
+
+cout << "Deseja voltar para o menu principal? (S/N): ";
+cin >> voltar;
+       
+} while (voltar == 'S' || voltar == 's');
+
+
+return 0;
+}
